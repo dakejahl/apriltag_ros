@@ -185,8 +185,7 @@ void AprilTagNode::onCamera(const sensor_msgs::msg::Image::ConstSharedPtr& msg_i
 
     std::vector<geometry_msgs::msg::TransformStamped> tfs;
 
-    auto num_detections = zarray_size(detections);
-    for(int i = 0; i < num_detections; i++) {
+    for(int i = 0; i < zarray_size(detections); i++) {
         apriltag_detection_t* det;
         zarray_get(detections, i, &det);
 
@@ -226,7 +225,7 @@ void AprilTagNode::onCamera(const sensor_msgs::msg::Image::ConstSharedPtr& msg_i
         tfs.push_back(tf);
     }
 
-    if (num_detections > 0) {
+    if (msg_detections.detections.size() > 0) {
         pub_detections->publish(msg_detections);
         tf_broadcaster.sendTransform(tfs);
     }
